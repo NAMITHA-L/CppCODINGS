@@ -1,0 +1,33 @@
+class Node:
+    def __init__(self, new_data):
+          
+        self.data = new_data
+        self.next = None
+
+def reverseList(head):
+      
+    stack = []
+  
+    temp = head
+  
+    while temp.next is not None:
+        stack.append(temp)
+        temp = temp.next
+  
+    head = temp
+  
+    while stack:
+          
+        temp.next = stack.pop()
+        
+        temp = temp.next
+  
+    temp.next = None
+  
+    return head
+
+def printList(node):
+    while node is not None:
+        print(f" {node.data}", end="")
+        node = node.next
+    print()
