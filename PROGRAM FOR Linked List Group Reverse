@@ -1,0 +1,33 @@
+def reverseKGroup(head, k):
+    if not head or k == 1:
+        return head
+
+    st = []
+    curr = head
+    prev = None
+
+    while curr is not None:
+      
+        # Terminate the loop when either
+        # current == None or count >= k
+        count = 0
+        while curr is not None and count < k:
+            st.append(curr)
+            curr = curr.next
+            count += 1
+
+        # Now pop the elements from the stack one by one
+        while len(st) > 0:
+          
+            # If the final list has not been started yet
+            if prev is None:
+                prev = st.pop()
+                head = prev
+            else:
+                prev.next = st.pop()
+                prev = prev.next
+
+    # Set the next pointer of the last node to None
+    prev.next = None
+
+    return head
