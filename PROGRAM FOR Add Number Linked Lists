@@ -1,0 +1,52 @@
+class Node:
+    def __init__(self, val):
+        self.data = val
+        self.next = None
+def reverse(head):
+    prev = None
+    curr = head
+    while curr is not None:
+        nextNode = curr.next
+        curr.next = prev
+        prev = curr
+        curr = nextNode
+    return prev
+def trimLeadingZeros(head):
+    while head and head.data == 0:
+        head = head.next
+    return head
+def addTwoLists(num1, num2):
+    res = None
+    curr = None
+    carry = 0
+    num1 = trimLeadingZeros(num1)
+    num2 = trimLeadingZeros(num2)
+    num1 = reverse(num1)
+    num2 = reverse(num2)
+    while num1 is not None or num2 is not None or carry != 0:
+        sumValue = carry
+        if num1 is not None:
+            sumValue += num1.data
+            num1 = num1.next
+        if num2 is not None:
+            sumValue += num2.data
+            num2 = num2.next        
+        newNode = Node(sumValue % 10)
+
+        carry = sumValue // 10
+
+        if res is None:
+            res = newNode
+            curr = newNode
+        else:
+            curr.next = newNode
+            curr = curr.next
+    return reverse(res)
+
+
+def printList(head):
+    curr = head
+    while curr is not None:
+        print(curr.data, end=" ")
+        curr = curr.next
+    print()
