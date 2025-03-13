@@ -1,0 +1,43 @@
+def cloneLinkedList(head):
+    if head is None:
+        return None
+    
+    curr = head
+    while curr is not None:
+        newNode = Node(curr.data)
+        newNode.next = curr.next
+        curr.next = newNode
+        curr = newNode.next
+    
+    curr = head
+    while curr is not None:
+        if curr.random is not None:
+            curr.next.random = curr.random.next
+        curr = curr.next.next
+    
+    curr = head
+    clonedHead = head.next
+    clone = clonedHead
+    while clone.next is not None:
+        curr.next = curr.next.next
+        clone.next = clone.next.next
+        
+        curr = curr.next
+        clone = clone.next
+    curr.next = None
+    clone.next = None
+    
+    return clonedHead
+
+def printList(head):
+    while head is not None:
+        print(f"{head.data}(", end="")
+        if head.random:
+            print(f"{head.random.data})", end="")
+        else:
+            print("null)", end="")
+        
+        if head.next is not None:
+            print(" -> ", end="")
+        head = head.next
+    print()
