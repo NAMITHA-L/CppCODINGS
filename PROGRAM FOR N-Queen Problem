@@ -1,0 +1,25 @@
+class Solution:
+    def issafe(self, row, col, rows, ld, rd, n):  # Added 'self'
+        return not ((rows >> row) & 1) and \
+               not ((ld >> (row + col)) & 1) and \
+               not ((rd >> (row - col + n)) & 1)
+
+    def nqn(self, col, n, board, res, rows, ld, rd):
+        if col == n:  # Base case: All queens are placed
+            res.append(board[:])
+            return
+
+        for row in range(n):
+            if self.issafe(row, col, rows, ld, rd, n):
+                board.append(row + 1)  # Store 1-based row index
+                self.nqn(col + 1, n, board, res,
+                         rows | (1 << row), 
+                         ld | (1 << (row + col)), 
+                         rd | (1 << (row - col + n)))
+                board.pop()
+
+    def nQueen(self, n):
+        res = []
+        board = []
+        self.nqn(0, n, board, res, 0, 0, 0)  # Fixed initial column to 0
+        return res
